@@ -12,8 +12,18 @@ const instance = axios.create({
 });
 
 export const productsApi = {
-  getIds({ offset = 10, limit = 50 }) {
-    return instance.post("", { action: "get_ids", params: { offset, limit } });
+  getIds({ offset, limit }: { offset?: number; limit?: number }) {
+    if (offset && limit) {
+      return instance.post("", {
+        action: "get_ids",
+        params: { offset, limit },
+      });
+    } else {
+      return instance.post("", {
+        action: "get_ids",
+        params: {},
+      });
+    }
   },
   getItems(id: string[]) {
     return instance.post("", {
